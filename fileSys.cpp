@@ -9,6 +9,8 @@ enum Command {
   CD,
   TREE,
   LS,
+  SER,
+  DSER,
   EXIT,
   UNKNOWN
 };
@@ -17,11 +19,13 @@ Command getCommand(const std::string& cmd) {
   if (cmd == "mkdir") return MKDIR;
   if (cmd == "rmdir") return RMDIR;
   if (cmd == "touch") return TOUCH;
-  if (cmd == "pwd")   return PWD;
-  if (cmd == "cd")    return CD;
-  if (cmd == "tree")  return TREE;
-  if (cmd == "ls")  return LS;
-  if (cmd == "exit")  return EXIT;
+  if (cmd == "ser") return SER;
+  if (cmd == "dser") return DSER;
+  if (cmd == "pwd") return PWD;
+  if (cmd == "cd") return CD;
+  if (cmd == "tree") return TREE;
+  if (cmd == "ls") return LS;
+  if (cmd == "exit") return EXIT;
   return UNKNOWN;
 }
 
@@ -52,6 +56,15 @@ int main() {
       case TOUCH:
         std::cin >> arg1 >> arg2;
         fs.touch(arg1, arg2);
+        break;
+
+      case SER:
+        fs.serialize();
+        break;
+
+      case DSER:
+        std::getline(std::cin >> std::ws, arg1);
+        fs.deserialize(arg1);
         break;
 
       case PWD:
