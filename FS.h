@@ -21,7 +21,7 @@ private:
   Node* root;
   Node* currDir;
   std::vector<std::string> split(std::string path, char divider);
-  Node* traversePath(std::string path);
+  Node* traversePath(const std::string& path);
 
 public:
 
@@ -34,20 +34,20 @@ public:
   void serialize();
   void serializeHelper(Node* node, std::string& serial);
 
-  void deserialize(std::string serial);
-  Node* deserializeHelper(Node* node, std::vector<std::string> serial, int& i);
+  void deserialize(const std::string& serial);
+  Node* deserializeHelper(Node* node, const std::vector<std::string>& serial, int& i);
 
-  void cd(std::string path);
+  void cd(const std::string& path);
 
-  void mkdir(std::string name, std::string path);
+  void mkdir(const std::string& name, const std::string& path);
 
-  void touch(std::string name, std::string path);
+  void touch(const std::string& name, const std::string& path);
 
-  void rmdir(std::string path);
+  void rmdir(const std::string& path);
 
-  void ls();
+  void ls() const;
 
-  void pwd();
+  void pwd() const;
 };
 
-#endif
+#endif // FS_H

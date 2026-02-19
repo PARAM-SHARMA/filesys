@@ -73,7 +73,7 @@ void FS::serialize() {
   std::cout << std::endl;
 }
 
-FS::Node* FS::deserializeHelper(Node* node, std::vector<std::string> serial, int& i) {
+FS::Node* FS::deserializeHelper(Node* node, const std::vector<std::string>& serial, int& i) {
   if (node == nullptr) return nullptr;
 
   std::vector<std::string> parts = split(serial[i], '~');
@@ -97,7 +97,7 @@ FS::Node* FS::deserializeHelper(Node* node, std::vector<std::string> serial, int
   return newNode;
 }
 
-void FS::deserialize(std::string serial) {
+void FS::deserialize(const std::string& serial) {
 
   std::vector<std::string> sserial = split(serial, ' ');
 
@@ -127,7 +127,7 @@ void FS::deserialize(std::string serial) {
   return;
 }
 
-FS::Node* FS::traversePath(std::string path) {
+FS::Node* FS::traversePath(const std::string& path) {
   std::vector<std::string> pathVec = split(path, '/');
   Node* curr = this->currDir;
 
@@ -160,7 +160,7 @@ FS::Node* FS::traversePath(std::string path) {
   return curr;
 }
 
-void FS::cd(std::string path) {
+void FS::cd(const std::string& path) {
   Node* dir = traversePath(path);
 
   if (dir != nullptr) {
@@ -168,7 +168,7 @@ void FS::cd(std::string path) {
   }
 }
 
-void FS::mkdir(std::string name, std::string path) {
+void FS::mkdir(const std::string& name, const std::string& path) {
   cd(path);
 
   Node* dir = new Node(name, false);
@@ -180,7 +180,7 @@ void FS::mkdir(std::string name, std::string path) {
     << (path.empty() ? "current directory" : path) << std::endl;
 }
 
-void FS::touch(std::string name, std::string path) {
+void FS::touch(const std::string& name, const std::string& path) {
   cd(path);
 
   Node* file = new Node(name, true);
@@ -192,7 +192,7 @@ void FS::touch(std::string name, std::string path) {
     << (path.empty() ? "current directory" : path) << std::endl;
 }
 
-void FS::rmdir(std::string path) {
+void FS::rmdir(const std::string& path) {
   Node* dir = traversePath(path);
   if (!dir) {
     std::cout << "Directory not found" << std::endl;
@@ -221,7 +221,7 @@ void FS::rmdir(std::string path) {
     << (path.empty() ? "current directory" : path) << std::endl;
 }
 
-void FS::pwd() {
+void FS::pwd() const {
   Node* temp = this->currDir;
   std::vector<std::string> path;
 
@@ -235,7 +235,7 @@ void FS::pwd() {
   }
 }
 
-void FS::ls() {
+void FS::ls() const {
   Node* temp = this->currDir;
 
   for(Node* child : this->currDir->children) {
